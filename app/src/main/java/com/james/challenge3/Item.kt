@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Item(
     val name: String,
-    val player: List<Player>
+    val player: List<Player> ?
 ) : Parcelable
 
 @Parcelize

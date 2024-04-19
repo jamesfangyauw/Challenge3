@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.james.challenge3.databinding.FragmentListPlayerBinding
 
-class ListPlayerFragment : Fragment(), ListPlayerListener {
+class ListPlayerFragment : Fragment(), ListAdapterListener {
 
     private var _binding: FragmentListPlayerBinding? = null
     private val binding get() = _binding!!
@@ -29,9 +29,11 @@ class ListPlayerFragment : Fragment(), ListPlayerListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = ListPlayerAdapter(this)
+        val adapter = ListNameAdapter(this)
 
-        adapter.submitList(getName().player)
+        val listPlayer = getName().player
+        val listPlayerItem = listPlayer?.map { Item(name = it.name, null) }
+        adapter.submitList(listPlayerItem)
 
         binding.recyclerView.adapter = adapter
 
@@ -50,7 +52,7 @@ class ListPlayerFragment : Fragment(), ListPlayerListener {
     }
 
 
-    override fun onClickItem(data: Player) {
+    override fun onClickItem(data: Item) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setData(Uri.parse("https://www.google.com/search?q=${data.name}"))
         startActivity(intent)
